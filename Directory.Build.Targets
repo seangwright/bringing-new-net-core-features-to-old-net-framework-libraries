@@ -1,10 +1,10 @@
 <Project>
-    <!-- https://github.com/dotnet/sdk/issues/1458#issuecomment-401497095 -->
-    <Target Name="_ResolveCopyLocalNuGetPackagePdbsAndXml" Condition="$(CopyLocalLockFileAssemblies) == true" AfterTargets="ResolveReferences">
+    <!-- https://github.com/dotnet/sdk/issues/1458#issuecomment-420456386 -->
+    <Target Name="_ResolvePublishNuGetPackagePdbsAndXml" AfterTargets="RunResolvePublishAssemblies">
         <ItemGroup>
-            <ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->'%(RootDir)%(Directory)%(Filename).pdb')" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != ''
+            <ResolvedFileToPublish Include="@(ResolvedAssembliesToPublish->'%(RootDir)%(Directory)%(Filename).pdb')" RelativePath="$([System.IO.Path]::ChangeExtension(%(ResolvedAssembliesToPublish.DestinationSubPath), '.pdb'))" DestinationSubPath="$([System.IO.Path]::ChangeExtension(%(ResolvedAssembliesToPublish.DestinationSubPath), '.pdb'))" Condition="'%(ResolvedAssembliesToPublish.PackageName)' != ''
                     and Exists('%(RootDir)%(Directory)%(Filename).pdb')" />
-            <ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->'%(RootDir)%(Directory)%(Filename).xml')" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != ''
+            <ResolvedFileToPublish Include="@(ResolvedAssembliesToPublish->'%(RootDir)%(Directory)%(Filename).xml')" RelativePath="$([System.IO.Path]::ChangeExtension(%(ResolvedAssembliesToPublish.DestinationSubPath), '.xml'))" DestinationSubPath="$([System.IO.Path]::ChangeExtension(%(ResolvedAssembliesToPublish.DestinationSubPath), '.xml'))" Condition="'%(ResolvedAssembliesToPublish.PackageName)' != ''
                     and Exists('%(RootDir)%(Directory)%(Filename).xml')" />
         </ItemGroup>
     </Target>
