@@ -8,21 +8,32 @@
 
     dotnet new classlib --name CSCLibStandard -f netstandard2.0
 
-    dotnet sln add CSCLibStandard/
+    dotnet sln CSC.sln add CSCLibStandard/
 
     dotnet new xunit --name CSCLibStandard.Tests
 
-    dotnet sln add CSCLibStandard.Tests/
+    dotnet sln CSC.sln add CSCLibStandard.Tests/
 
     dotnet add CSCLibStandard.Tests/ reference CSCLibStandard/
 
-    dotnet build
+    dotnet build CSC.sln
 
-    dotnet test
+    dotnet test CSC.sln
 
     dotnet pack CSCLibStandard/ --output ./ --configuration Release
 
 ### Demo 2 - Working with `<PackageReference />`
+
+1. Review `packages.config` entries
+    - Only `Serilog.Sinks.Debug`, `Newtonsoft.Json`, and `Dapper` were "installed"
+    - Note transitive dependencies in manifest
+
+1. Right click `CSCLibFramework`
+   -> Select `Unload Project`
+
+1. Right click `CSCLibFramework`
+   -> Edit `CSCLibFramework.csproj`
+   - Identify `<HintPath>` for Dapper
 
 1. VS
    -> Options
@@ -39,7 +50,7 @@
 1. Right click `CSCLibFramework`
    -> Edit `CSCLibFramework.csproj`
    - Review new `<PackageReference />` nodes
-   - Remove transitive dependencies
+   - Identify removed transitive dependencies
 
 ### Demo 3 - Working with the Common Project System (CPS)
 
